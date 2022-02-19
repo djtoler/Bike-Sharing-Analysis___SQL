@@ -1,3 +1,87 @@
+#INSTALL PACKAGES AND LIBRARIES
+install.packages('tidyverse')
+library(tidyverse)
+distance_casual <- read.csv("R-Test-Distance-Member_Raw.csv")
+install.packages('geodist')
+library(geodist)
+
+#MANIPULATE DATA TO EXTRACT INFO NEEDS TO CALCULATE GEO DISTANCES
+start <- distance_casual[,2:3]
+end <- distance_casual[,4:5]
+ride_id <- distance_casual[,6]
+names(start) <- c('lat','lon')
+names(end) <- c('lat','lon')
+
+#USE GEODIST FUNCTION TO DO CALCULATIONS
+metres <- geodist(x=start, y=end, paired = T, measure = 'geodesic')
+miles <- metres / 1601
+miles
+
+trips4 <- data.frame(Apple = distance_casual[,1], Distance = miles)
+trips3 <- trips[order(-trips$Distance),]
+trips3
+
+stations3 <- aggregate(Distance ~ Apple, trips, mean)
+stations3 <- stations[order(-stations$Distance),]
+stations3
+
+data(stations)
+
+write.table(trips4, file="R-Test-Distance-Members_Raw(calculated).csv", sep=",")
+
+install.packages('geodist')
+library(geodist)
+
+df <- read.csv('r-studio-demo-2.csv')
+
+# Separating and renaming start and end points
+start <- df[,2:3]
+end <- df[,4:5]
+names(start) <- c('lat','lon')
+names(end) <- c('lat','lon')
+
+# Calculating distance
+metres <- geodist(x=start, y=end, paired = T, measure = 'geodesic')
+miles <- metres / 1601
+miles
+
+# Sorting the distances
+trips <- data.frame(Station.ID = df[,1], Distance = miles)
+trips <- trips[order(-trips$Distance),]
+
+# Grouping by category
+
+stations <- aggregate(Distance ~ Station.ID, trips, mean)
+stations <- stations[order(-stations$Distance),]
+stations
+
+# Plotting
+# Simple plot
+plot(stations$Distance)
+
+# MAKE PLOTS LOOK BETTER
+library(ggplot2)
+stations$Station.ID <- as.character(stations$Station.ID)
+ggplot(stations, aes(1:100, Distance)) +
+  geom_col() # +
+  # something to change the xticks/xnames
+
+# rownames(miles) <- cities
+# colnames(miles) <- cities
+# miles
+# 
+# m <- matrix(nrow=0,ncol=3,dimnames = list(c(),c('Origin','Destination','Distance')))
+# trips <- as.data.frame(m)
+# 
+# for (i in 1:nrow(miles)) {
+#   for (j in 1:ncol(miles)) {
+#     if (j == i) { 
+#       next
+#     }
+#     trips = rbind(trips, setNames(data.frame(cities[i], cities[j], miles[i,j]),names(trips)))
+#   }
+# }
+# 
 
 install.packages('tidyverse')
 library(tidyverse)
