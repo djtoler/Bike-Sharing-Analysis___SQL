@@ -1,0 +1,43 @@
+
+install.packages('tidyverse')
+library(tidyverse)
+distance_casual <- read.csv("New_Distance_Format_Member.csv")
+install.packages('geodist')
+library(geodist)
+
+start <- distance_casual[,1:2]
+end <- distance_casual[,3:4]
+ride <- distance_casual[,5]
+names(start) <- c('lat','lon')
+names(end) <- c('lat','lon')
+names(ride) <- c(ride_id)
+
+metres <- geodist(x=start, y=end, paired = T, measure = 'geodesic')
+miles <- metres / 1601
+miles
+
+trips7 <- data.frame(Apple = distance_casual[,5], Distance = miles)
+
+write.table(trips7, file="New_Distance_With_PK_Member.csv", sep=",")
+
+install.packages("dyplr")
+install.packages('tidyverse')
+library(tidyverse)
+RideCas3 <- read.csv("Ride_member.csv", header = FALSE)
+SZNCas3 <- read.csv("Season_member.csv", header = FALSE)
+
+
+rideid3 <- RideCas3[,1]
+season3 <- SZNCas3[,1]
+both <- c(rideid3, season3)
+both
+
+Boffum4 <- data.frame(rideid3 = RideCas3[,1], season3 = SZNCas3[,1])
+write.table(Boffum4, file="Seasons_Member1000.csv", sep=",", row.names = FALSE)
+
+SZNCas <- data.frame(Molecole = c("A", "B", "C", "F", "G"),
+                  PZ4 = 4, PZ5 = 5, PZ6 = 6)
+
+merged <- dplyr::full_join(df1, df2) %>%
+  
+view(RideCas)
