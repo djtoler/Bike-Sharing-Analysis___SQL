@@ -1,5 +1,5 @@
-----------------------------------------
--- exp of writing the data to a local file
+---------------------------------- 
+exp of writing the data to a local file
 select ride_id
 from master_all
 where member_casual = 'member'
@@ -15,7 +15,7 @@ INTO TABLE `bike_start_times`
 COLUMNS TERMINATED BY ',' ENCLOSED BY '\"'
 ESCAPED BY '\\'
 LINES TERMINATED BY '\n';
--------------------------------------------
+--------------------------------------
 
 
 -- OBJECTIVE: Determine how annual members and casual riders use their bikes different? 
