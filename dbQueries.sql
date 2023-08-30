@@ -1,3 +1,23 @@
+----------------------------------------
+-- exp of writing the data to a local file
+select ride_id
+from master_all
+where member_casual = 'member'
+INTO OUTFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\Season_member.csv'
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+;
+
+-- exp of importing the data from a local file
+LOAD DATA LOCAL INFILE "C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\bike_times_all.csv"
+INTO TABLE `bike_start_times`
+COLUMNS TERMINATED BY ',' ENCLOSED BY '\"'
+ESCAPED BY '\\'
+LINES TERMINATED BY '\n';
+-------------------------------------------
+
+
 -- OBJECTIVE: Determine how annual members and casual riders use their bikes different? 
 -- STEP 1 - Split the dataset into 2 separate tables, seperating members and casual riders.
 -- STEP 2 - List different combinations of data points to compare and contrast with the 2 catagories.
@@ -136,6 +156,7 @@ CREATE TABLE Bike_Start_Times
 ,started_at varchar(100)
 );
 
+##Load local data into sql faster than using sqls ui.
 
 LOAD DATA LOCAL INFILE "C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\bike_times_all.csv"
 INTO TABLE `bike_start_times`
@@ -242,14 +263,6 @@ select substring(started_at,6,2) as start_month, start_lat, start_lng, end_lat, 
 from casual_all
 ;
 
-select ride_id
-from master_all
-where member_casual = 'member'
-INTO OUTFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\Season_member.csv'
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
-;
 
 show variables like "secure_file_priv";
 
